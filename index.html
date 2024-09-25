@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AthriDev - Powerful SaaS Solutions">
+    <title>AthriDev - Start the Engine</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* Basic Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0f0f20;
+            color: #ffffff;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        /* Preloader screen */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #0f0f20;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 1000;
+        }
+
+        /* Circle Button */
+        .play-button {
+            width: 150px;
+            height: 150px;
+            background-color: #0f0f20;
+            border: 3px solid #ff0000;
+            border-radius: 50%;
+            cursor: pointer;
+            color: #ffffff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: box-shadow 0.3s ease; /* Ensures smooth start/stop of glow effect */
+        }
+
+        /* Glow Effect for the Start Button (only on hover) */
+        .play-button:hover {
+            box-shadow: 0 0 20px #ff007c, 0 0 40px #ff007c, 0 0 60px #ff007c, 0 0 80px #ff007c;
+        }
+
+        /* Animation for button click */
+        @keyframes button-click-effect {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 10px #ff007c, 0 0 30px #ff007c, 0 0 50px #ff007c;
+            }
+            50% {
+                transform: scale(1.2);
+                box-shadow: 0 0 20px #61dafb, 0 0 50px #61dafb, 0 0 70px #61dafb;
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 10px #ff007c, 0 0 30px #ff007c;
+            }
+        }
+
+        /* Title Style with Hover */
+        h1 {
+            font-size: 4rem;
+            color: #61dafb;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            opacity: 0;
+            transition: opacity 1s ease, color 0.3s ease;
+        }
+
+        h1:hover {
+            color: #ff007c; /* Change to pink on hover */
+        }
+
+        p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: #ffffff;
+            opacity: 0.8;
+            opacity: 0;
+            transition: opacity 1s ease 0.5s;
+        }
+
+        .social-links {
+            margin-top: 2rem;
+            opacity: 0;
+            transition: opacity 1s ease 1.5s;
+        }
+
+        .social-links a {
+            margin: 0 15px;
+            color: #61dafb;
+            font-size: 2rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #ff007c;
+        }
+
+        /* Hidden content initially */
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+
+            p {
+                font-size: 1.2rem;
+            }
+
+            .play-button {
+                width: 120px;
+                height: 120px;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Preloader Screen with Glowing Circle Button -->
+    <div class="preloader">
+        <button class="play-button" onclick="startIgnition()">Start the Engine</button>
+    </div>
+
+    <!-- Main Page Content (Initially hidden) -->
+    <div class="container hidden" id="main-content">
+        <h1>AthriDev</h1>
+        <p>Fueling the future of SaaS with powerful, scalable solutions.</p>
+
+        <!-- Social Links (Only GitHub remains) -->
+        <div class="social-links">
+            <a href="https://github.com/athridev" target="_blank"><i class="fab fa-github"></i></a>
+        </div>
+    </div>
+
+    <!-- Audio: Supercar Ignition Sound Effect -->
+    <audio id="ignition-sound" preload="auto">
+        <source src="sound.wav" type="audio/wav">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- JavaScript to Handle Ignition Start -->
+    <script>
+        function startIgnition() {
+            // Add the cool animation to the button when clicked
+            const button = document.querySelector('.play-button');
+            button.style.animation = 'button-click-effect 0.6s ease';
+
+            // Hide the preloader after a short delay
+            setTimeout(() => {
+                document.querySelector('.preloader').style.display = 'none';
+
+                // Show the main content
+                const content = document.getElementById('main-content');
+                content.classList.remove('hidden');
+                
+                // Play the ignition sound
+                const sound = document.getElementById('ignition-sound');
+                sound.play().catch(error => {
+                    console.error("Failed to play sound:", error);
+                });
+                
+                // Trigger the fade-in animations for content
+                document.querySelector('h1').style.opacity = 1;
+                document.querySelector('p').style.opacity = 1;
+                document.querySelector('.social-links').style.opacity = 1;
+            }, 600); // Time to complete the animation
+        }
+    </script>
+</body>
+</html>
